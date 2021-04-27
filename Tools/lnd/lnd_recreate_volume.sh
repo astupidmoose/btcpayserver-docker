@@ -2,18 +2,7 @@
 
 set -e
 
-if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
- 
- read -p "The unofficial taproot node release is already active `echo $'\n> '`" yn
- if [ $yn != "yes" ]; then
- 	exit 0
- fi
-
-fi
-
-
-
-read -p "This script will  THIS LND WILL BE LOST! Type 'yes' to proceed only after you've transfered all your funds from this LND instance `echo $'\n> '`" yn
+read -p "This script will delete and recreate your LND Bitcoin container. YOU CAN'T UNDO THIS OPERATION, ALL FUNDS THAT YOU CURRENTLY HAVE ON THIS LND WILL BE LOST! Type 'yes' to proceed only after you've transfered all your funds from this LND instance `echo $'\n> '`" yn
 if [ $yn != "yes" ]; then
 	exit 0
 fi
