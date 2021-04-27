@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bashrc
 set -e
 
 if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
