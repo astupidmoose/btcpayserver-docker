@@ -9,8 +9,10 @@ if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
  fi
  export BTCPAYGEN_ADDITIONAL_FRAGMENTS="${BTCPAYGEN_ADDITIONAL_FRAGMENTS//bitcoin-taproot-based/}"
  export BTCPAYGEN_EXCLUDE_FRAGMENTS="${BTCPAYGEN_EXCLUDE_FRAGMENTS//bitcoin/}"
+  
+ . btcpay-setup.sh -i
  
- echo "Configured to use official Bitcoin release. Run . btcpay-setup.sh -i to bring changes into effect."
+ echo "Configured to use official Bitcoin release."
  exit 0
 fi
 
@@ -29,5 +31,7 @@ fi
 export BTCPAYGEN_ADDITIONAL_FRAGMENTS="$BTCPAYGEN_ADDITIONAL_FRAGMENTS;bitcoin-taproot-based"
 export BTCPAYGEN_EXCLUDE_FRAGMENTS="$BTCPAYGEN_EXCLUDE_FRAGMENTS;bitcoin"
 
-echo "Configured to use the unofficial Bitcoin release with taproot activation. Run . btcpay-setup.sh -i to bring changes into effect."
+. btcpay-setup.sh -i
+
+echo "Configured to use the unofficial Bitcoin release with taproot activation."
 exit 0
