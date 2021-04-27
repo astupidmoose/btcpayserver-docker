@@ -3,21 +3,23 @@
 set -e
 
 if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
- read -p "The unofficial taproot node release is already active. Type 'official' to change back to the official release `echo $'\n> '`" yn
- if [ $yn != "official" ]; then
+ 
+ read -p "The unofficial taproot node release is already active `echo $'\n> '`" yn
+ if [ $yn != "yes" ]; then
  	exit 0
  fi
- export BTCPAYGEN_ADDITIONAL_FRAGMENTS="${BTCPAYGEN_ADDITIONAL_FRAGMENTS//bitcoin-taproot-based/}"
- export BTCPAYGEN_EXCLUDE_FRAGMENTS="${BTCPAYGEN_EXCLUDE_FRAGMENTS//bitcoin/}"
- 
- echo "Configured to use official Bitcoin release. Run . btcpay-setup.sh -i to bring changes into effect."
- exit 0
+
 fi
 
 
 
-read -p "This script will swap the official Bitcoin release with an unofficial version provided from https://bitcointaproot.cc that includes taproot activation signalling. Type 'unofficial' to switch to this UNOFFICIAL FORK OF BITCOIN CORE. `echo $'\n> '`" yn
-if [ $yn != "unofficial" ]; then
+read -p "This script will  THIS LND WILL BE LOST! Type 'yes' to proceed only after you've transfered all your funds from this LND instance `echo $'\n> '`" yn
+if [ $yn != "yes" ]; then
+	exit 0
+fi
+
+read -p "Only proceed if you've removed all the funds from LND Bitcoin container! This LND instance will be completely deleted and all data from it unrecoverable. Type 'yes' to proceed only if you are 100% sure `echo $'\n> '`" yn
+if [ $yn != "yes" ]; then
 	exit 0
 fi
 
@@ -26,8 +28,14 @@ if [ $yn != "yes" ]; then
 	exit 0
 fi
 
-export BTCPAYGEN_ADDITIONAL_FRAGMENTS="$BTCPAYGEN_ADDITIONAL_FRAGMENTS;bitcoin-taproot-based"
-export BTCPAYGEN_EXCLUDE_FRAGMENTS="$BTCPAYGEN_EXCLUDE_FRAGMENTS;bitcoin"
+../btcpay-down.sh
 
-echo "Configured to use the unofficial Bitcoin release with taproot activation. Run . btcpay-setup.sh -i to bring changes into effect."
-exit 0
+docker volume rm --force generated_lnd_bitcoin_datadir
+
+# very old installations had production_lnd_bitcoin_datadir volume
+# https://github.com/btcpayserver/btcpayserver-docker/issues/272
+docker volume rm --force production_lnd_bitcoin_datadir
+
+../btcpay-up.sh
+
+echo "LND container recreated"
