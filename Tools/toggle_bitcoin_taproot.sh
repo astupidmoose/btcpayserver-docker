@@ -1,5 +1,9 @@
 #!/bin/bash
-source ~/.bashrc
+if [[ "$0" = "$BASH_SOURCE" ]]; then
+    echo "This script must be sourced \". toggle_bitcoin_taproot.sh\"" 
+    exit 1
+fi
+
 set -e
 
 if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
@@ -10,7 +14,7 @@ if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
  export BTCPAYGEN_ADDITIONAL_FRAGMENTS="${BTCPAYGEN_ADDITIONAL_FRAGMENTS//bitcoin-taproot-based/}"
  export BTCPAYGEN_EXCLUDE_FRAGMENTS="${BTCPAYGEN_EXCLUDE_FRAGMENTS//bitcoin/}"
   
- . btcpay-setup.sh -i
+  . btcpay-setup.sh -i
  
  echo "Configured to use official Bitcoin release."
  exit 0
@@ -22,7 +26,6 @@ read -p "This script will swap the official Bitcoin release with an unofficial v
 if [ $yn != "unofficial" ]; then
 	exit 0
 fi
-
 read -p "OK, last chance to abort. Type 'yes' to continue! `echo $'\n> '`" yn
 if [ $yn != "yes" ]; then
 	exit 0
@@ -34,4 +37,3 @@ export BTCPAYGEN_EXCLUDE_FRAGMENTS="$BTCPAYGEN_EXCLUDE_FRAGMENTS;bitcoin"
 . btcpay-setup.sh -i
 
 echo "Configured to use the unofficial Bitcoin release with taproot activation."
-exit 0
