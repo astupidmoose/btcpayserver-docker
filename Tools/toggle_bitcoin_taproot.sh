@@ -6,12 +6,12 @@ fi
 
 set -e
 
-if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-based" ]]; then
+if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcoin-taproot-bip8" ]]; then
  read -p "The unofficial taproot node release is already active. Type 'official' to change back to the official release `echo $'\n> '`" yn
  if [ $yn != "official" ]; then
  	exit 0
  fi
- export BTCPAYGEN_ADDITIONAL_FRAGMENTS="${BTCPAYGEN_ADDITIONAL_FRAGMENTS//bitcoin-taproot-based/}"
+ export BTCPAYGEN_ADDITIONAL_FRAGMENTS="${BTCPAYGEN_ADDITIONAL_FRAGMENTS//bitcoin-taproot-bip8/}"
  export BTCPAYGEN_EXCLUDE_FRAGMENTS="${BTCPAYGEN_EXCLUDE_FRAGMENTS//bitcoin/}"
   
   . btcpay-setup.sh -i
@@ -31,7 +31,7 @@ if [ $yn != "yes" ]; then
 	exit 0
 fi
 
-export BTCPAYGEN_ADDITIONAL_FRAGMENTS="$BTCPAYGEN_ADDITIONAL_FRAGMENTS;bitcoin-taproot-based"
+export BTCPAYGEN_ADDITIONAL_FRAGMENTS="$BTCPAYGEN_ADDITIONAL_FRAGMENTS;bitcoin-taproot-bip8"
 export BTCPAYGEN_EXCLUDE_FRAGMENTS="$BTCPAYGEN_EXCLUDE_FRAGMENTS;bitcoin"
 
 . btcpay-setup.sh -i
