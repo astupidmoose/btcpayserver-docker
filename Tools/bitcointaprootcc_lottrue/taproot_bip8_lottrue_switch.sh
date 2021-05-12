@@ -12,7 +12,7 @@ if [[ "$BTCPAYGEN_ADDITIONAL_FRAGMENTS" =~ "bitcointaprootcc-bip8-lottrue" ]]; t
      exit 0
  fi
  export BTCPAYGEN_ADDITIONAL_FRAGMENTS="${BTCPAYGEN_ADDITIONAL_FRAGMENTS//bitcointaprootcc-bip8-lottrue/}"
- export BTCPAYGEN_EXCLUDE_FRAGMENTS="${BTCPAYGEN_EXCLUDE_FRAGMENTS//bitcoin/}"
+ export BTCPAYGEN_EXCLUDE_FRAGMENTS="${BTCPAYGEN_EXCLUDE_FRAGMENTS//bitcoin;/}"
   
   . btcpay-setup.sh -i
   cd Tools  echo "Configured to use Bitcoin Core release."
@@ -28,7 +28,7 @@ if [ $yn != "bitcointaprootcc-bip8-lottrue" ]; then
 fi
 
 export BTCPAYGEN_ADDITIONAL_FRAGMENTS="$BTCPAYGEN_ADDITIONAL_FRAGMENTS;bitcointaprootcc-bip8-lottrue"
-export BTCPAYGEN_EXCLUDE_FRAGMENTS="$BTCPAYGEN_EXCLUDE_FRAGMENTS;bitcoin"
+export BTCPAYGEN_EXCLUDE_FRAGMENTS="$BTCPAYGEN_EXCLUDE_FRAGMENTS;bitcoin;"
 
 . btcpay-setup.sh -i
 cd Tools
